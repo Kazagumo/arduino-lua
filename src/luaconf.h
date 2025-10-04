@@ -122,7 +122,7 @@
 /*
 @@ LUA_32BITS enables Lua with 32-bit integers and 32-bit floats.
 */
-#define LUA_32BITS	1
+#define LUA_32BITS	0
 
 
 /*
@@ -536,16 +536,16 @@
 #elif LUA_INT_TYPE == LUA_INT_LONGLONG	/* }{ long long */
 
 /* use presence of macro LLONG_MAX as proxy for C99 compliance */
-#if defined(LLONG_MAX)		/* { */
+#if defined(LLONG_MAX) || LUA_32BITS == 0		/* { */
 /* use ISO C99 stuff */
 
 #define LUA_INTEGER		long long
 #define LUA_INTEGER_FRMLEN	"ll"
 
-#define LUA_MAXINTEGER		LLONG_MAX
-#define LUA_MININTEGER		LLONG_MIN
+#define LUA_MAXINTEGER		LONG_LONG_MAX
+#define LUA_MININTEGER		LONG_LONG_MIN
 
-#define LUA_MAXUNSIGNED		ULLONG_MAX
+#define LUA_MAXUNSIGNED		ULONG_LONG_MAX
 
 #elif defined(LUA_USE_WINDOWS) /* }{ */
 /* in Windows, can use specific Windows types */
